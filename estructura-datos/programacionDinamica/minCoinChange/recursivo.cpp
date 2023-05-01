@@ -19,6 +19,6 @@ int f(int target) {
     return minCoin;
 }
 int main() {
-    cout<<f(v)<<endl;
+    cout<<f(50)<<endl;
     return 0;
 }
