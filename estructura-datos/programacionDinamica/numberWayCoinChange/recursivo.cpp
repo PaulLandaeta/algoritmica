@@ -15,7 +15,8 @@ int f(int sumTotal, int index) {
     return 0;
    }
    // incluimos y excluimos 
-   return f(sumTotal+coins[index], index) + f(sumTotal, index+1);
+   return f(sumTotal+coins[index], index) 
+   + f(sumTotal, index+1);
 }
 
 int main() {
