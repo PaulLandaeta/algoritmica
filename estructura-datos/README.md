@@ -5,11 +5,10 @@ Bienvenido a esta seccion de Estructuras de Datos. En esta carpeta encontrarás 
 ## Índice
 
 - [Estructuras de Datos](#estructuras-de-datos)
-  - [Índice](#índice)
-  - [Trie](Trie)
-  - [Segment Tree](#segment-tree)
+  - [Trie](trie)
+  - [Segment Tree](segment-tree)
   - [BIT (Binary Indexed Tree)](#bit-binary-indexed-tree)
-  - [Union Find](#union-find)
+  - [Union Find](union%20find)
 
 ## Trie
 
