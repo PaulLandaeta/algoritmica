@@ -5,10 +5,11 @@ using namespace std;
 struct node {
     char currentCharacter;       
     bool isWord;
-   //  int priority = 0;            
+    int contPrefix;           
     struct node *children[27];  // [null,null,null,......,null]
     node() {
         isWord = false;
+        contPrefix = 0;
     }
 }*trie; 
 
@@ -24,11 +25,10 @@ void insertWord(string word) {   // alba
         int character = word[i] - 'a';       // i = 0 'a'-'a' = 0
         if(currentNode->children[character] == NULL ) {
             currentNode->children[character] = new node();
-           // currentNode->isWord = false;
         }
-      //   currentNode = max(currentNode->priority,priority);
         currentNode = currentNode->children[character];
         currentNode->currentCharacter = word[i];
+        currentNode->contPrefix = currentNode->contPrefix + 1; 
     }
     currentNode->isWord = true;
 }
@@ -46,6 +46,17 @@ bool searchWord(string word) {   // alto
     return currentNode->isWord;
 }
 
+int searchByPrefix(string prefix) {   // alto 
+    node *currentNode =  trie;  
+    for (int i = 0; i< prefix.length(); i++) {
+        int character = prefix[i] - 'a';       // i = 0 'a'-'a' = 0
+        if(currentNode->children[character] == NULL ) {
+           return 0;
+        }
+        currentNode = currentNode->children[character];
+    }
+    return currentNode->contPrefix;
+}
 
 /*
 int findWords(string prefix) {   // alto 
