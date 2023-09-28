@@ -1,58 +1,72 @@
 #include <bits/stdc++.h>
 #define input freopen("in.txt", "r", stdin)
-#define output freopen("out.txt", "w", stdout)
+#define Li long long int
 using namespace std;
 
-int BIT[10000001];
-int N;
+Li BIT[10000001];
+Li N;
 
-void update(int posicion, int valor)
+Li query(Li posicion)
 {
-  for (; posicion <= N; posicion += posicion & -posicion)
-  {
-    BIT[posicion] += valor;
-  }
-}
-
-int query(int posicion)
-{
-  int resultado = 0;
-  for (; posicion > 0; posicion -= posicion & -posicion)
+  Li resultado = 0;
+  for (; posicion > 0; posicion -= (posicion & -posicion))
   {
     resultado += BIT[posicion];
   }
   return resultado;
 }
 
-int completeQuery(int posicionUno, int posicionDos)
+Li completeQuery(Li posicionUno, Li posicionDos)
 {
   return query(posicionDos) - query(posicionUno - 1);
+}
+
+void update(Li posicion, Li valor)
+{
+  for (; posicion <= N; posicion += (posicion & -posicion))
+  {
+    BIT[posicion] += valor;
+  }
+}
+
+void completeUpdate(Li posicion, Li valor)
+{
+  Li newValue = valor - completeQuery(posicion, posicion);
+  update(posicion, newValue);
 }
 
 int main()
 {
   input;
   printf("Tamaño del bit1D (1 <= N <= 10^{7}):\n");
-  scanf("%d", &N);
-  printf("%d Elementos:\n", N);
-  for (size_t i = 1; i <= N; i++)
+  scanf("%lld", &N);
+  printf("%lld Elementos:\n", N);
+  for (Li i = 1; i <= N; i++)
   {
-    int newElement;
-    scanf("%d", &newElement);
+    Li newElement;
+    scanf("%lld", &newElement);
     update(i, newElement);
   }
 
-  int Q;
+  Li Q;
   printf("Numero de consultas:\n");
-  scanf("%d", &Q);
-  printf("%d Consultas:\n", Q);
+  scanf("%lld", &Q);
+  printf("%lld Consultas:\n", Q);
   while (Q--)
   {
-    int posUno, posDos;
-    scanf("%d %d", &posUno, &posDos);
-    int sumaConsulta = completeQuery(posUno, posDos);
-    printf("SUMA EN EL RANGO %d - %d: %d\n", posUno, posDos, sumaConsulta);
+    char operationType[1];
+    Li posUno, posDos;
+    scanf("%s", operationType);
+    scanf("%lld %lld", &posUno, &posDos);
+    if (operationType[0] == 'Q')
+    {
+      Li sumaConsulta = completeQuery(posUno, posDos);
+      printf("SUMA EN EL RANGO (%lld - %lld): %lld\n", posUno, posDos, sumaConsulta);
+    }
+    else
+    {
+      completeUpdate(posUno, posDos);
+      printf("ACTUALIZACION: posicion(%lld) - nuevoValor(%lld)\n", posUno, posDos);
+    }
   }
-
-  return 0;
 }
